@@ -1,0 +1,76 @@
+syntax = "proto2";
+package com.genesis.protobuf;
+import "client/MessageType.proto";
+
+option java_outer_classname = "RobotMsg";
+
+message CSRobotPos {
+  option (cs_message_type) = CS_ROBOT_POS;
+
+  optional RobotPos info = 1;
+}
+
+message RobotPos {
+  optional string id = 1;// 机器人id
+  optional float posX = 2; // 机器人x坐标
+  optional float posY = 3; // 机器人y坐标
+  optional float rotation = 4; // 机器人旋转信息
+}
+
+message CSRobotBattery {
+  option (cs_message_type) = CS_ROBOT_BATTERY;
+
+  optional RobotBattery info = 1;
+}
+
+message RobotBattery {
+  optional float remainingPower = 1;
+  optional float remainingPercent = 2;
+  optional float voltage = 3;
+  optional float current = 4;
+  optional bool isCharging = 5;
+}
+
+message CSRobotSwitch {
+  option (cs_message_type) = CS_ROBOT_SWITCH;
+
+  optional RobotSwitch info = 1;
+}
+
+message RobotSwitch {
+  optional int32 assistance = 1;
+  optional bool urgent = 2;
+  optional bool power = 3;
+  optional int32 collision = 4;
+}
+
+enum RobotStatus {
+  StandBy = 0;
+  Following = 1;
+  Pause = 2;
+  Navigating = 3;
+  Charging = 4;
+}
+
+message CSRobotStatus {
+  option (cs_message_type) = CS_ROBOT_STATUS;
+
+  optional RobotStatusInfo info = 1;
+}
+
+message RobotStatusInfo {
+  optional RobotStatus status = 1;
+}
+
+message CSRobotError {
+  option (cs_message_type) = CS_ROBOT_ERROR;
+
+  repeated RobotError errors = 1;
+}
+
+message RobotError {
+  optional int32 id = 1;
+  optional int32 level = 2;
+  optional RobotStatus status = 3;
+  optional string reason = 4;
+}

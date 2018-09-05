@@ -1,9 +1,10 @@
 #include <iostream>
-
+#include "websocketclient.h"
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    WebSocketClient client;
     return 0;
 }
+

@@ -1,0 +1,55 @@
+syntax = "proto2";
+package com.genesis.protobuf;
+import "google/protobuf/descriptor.proto";
+option java_outer_classname = "MessageType";
+
+extend google.protobuf.MessageOptions {
+  optional CSMessageType cs_message_type = 50001;
+  optional SCMessageType sc_message_type = 50002;
+  optional SSMessageType ss_message_type = 50003;
+}
+
+extend google.protobuf.EnumValueOptions {
+  optional MessageTarget TARGET = 50001 [default = ERROR];
+}
+
+// 要发送到的目标类型
+enum MessageTarget {
+  ERROR = 1;
+}
+
+//Client发给Server的消息
+enum CSMessageType {
+  //通用消息1-50
+  CS_HANDSHAKE = 1; // 握手
+  CS_TIME_SYNC = 2; // 对时
+  CS_CLIENT_TYPE = 3; // 客户端类型
+
+  CS_ROBOT_POS = 21; // 机器人位置信息
+  CS_ROBOT_BATTERY = 22; // 机器人电池信息
+  CS_ROBOT_SWITCH = 23; // 机器人开关信息
+  CS_ROBOT_ERROR = 24; // 机器人错误信息
+  CS_ROBOT_STATUS = 25; // 机器人状态信息
+
+  CS_REQUEST_ROBOT_INFO = 31; // 请求机器人信息
+}
+
+//Server发给Client的消息
+enum SCMessageType {
+  //通用消息1-50
+  SC_HANDSHAKE_REPLY = 1; // 握手成功//
+  SC_MSG_CAN_NOT_PROCESS = 2; // 当前状态无法处理某消息
+  SC_CLIENT_DATA_ERROR = 3; // 提示客户端数据错误，请重新连接
+  SC_TIME_SYNC_REPLY = 4; // 对时回复
+
+  SC_ROBOT_POS = 31; // 机器人的位置信息
+}
+
+//Server发给Server的消息
+enum SSMessageType {
+  // 通用消息 1-50
+  SS_HANDSHAKE = 1; // 握手
+  SS_HANDSHAKE_REPLY = 2; // 握手回复
+  SS_HEARTBEAT = 3; // 心跳
+  SS_HEARTBEAT_REPLY = 4; // 心跳回复
+}

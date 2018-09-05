@@ -1,0 +1,39 @@
+syntax = "proto2";
+package com.genesis.protobuf;
+import "client/MessageType.proto";
+option java_outer_classname = "LoginMessage";
+
+///////////////////////////////////////////////////////////////////////////////
+//这里定义登陆相关消息
+/**
+ * 客户端请求，握手
+ */
+message CSHandshake {
+  option (cs_message_type) = CS_HANDSHAKE;
+
+  /**空消息*/
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * 服务器通知，握手回复
+ */
+message SCHandshakeReply {
+  option (sc_message_type) = SC_HANDSHAKE_REPLY;
+
+  /** 自增序列号的起始值*/
+  required int32 indexBegin = 1;
+  /** 未来会添加加密的密钥*/
+}
+
+enum ClientType {
+  Robot = 1; // 机器人
+  ControlClient = 2; // 控制客户端(h5前端)
+}
+
+// 告诉服务器我是哪种类型的客户端
+message CSClientType {
+  option (cs_message_type) = CS_CLIENT_TYPE;
+
+  optional ClientType type = 1; // 客户端类型
+}
